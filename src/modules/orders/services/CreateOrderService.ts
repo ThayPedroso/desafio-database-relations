@@ -13,19 +13,22 @@ interface IProduct {
 }
 
 interface IRequest {
-  customer_id: string;
+  customerId: string;
   products: IProduct[];
 }
 
 @injectable()
 class CreateOrderService {
   constructor(
+    @inject('IOrdersRepository')
     private ordersRepository: IOrdersRepository,
+    @inject('IProductsRepository')
     private productsRepository: IProductsRepository,
+    @inject('ICustomersRepository')
     private customersRepository: ICustomersRepository,
   ) {}
 
-  public async execute({ customer_id, products }: IRequest): Promise<Order> {
+  public async execute({ customerId, products }: IRequest): Promise<Order> {
     // TODO
   }
 }

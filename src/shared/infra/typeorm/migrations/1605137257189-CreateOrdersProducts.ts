@@ -17,15 +17,17 @@ export default class CreateOrdersProducts1605137257189
           {
             name: 'orderId',
             type: 'uuid',
+            isNullable: true,
           },
           {
             name: 'productId',
             type: 'uuid',
+            isNullable: true,
           },
           {
             name: 'price',
             type: 'decimal',
-            precision: 2,
+            precision: 10,
             scale: 2,
           },
           {
@@ -45,19 +47,19 @@ export default class CreateOrdersProducts1605137257189
         ],
         foreignKeys: [
           {
-            name: 'orderId',
+            name: 'OrdersProductsOrder',
             referencedTableName: 'orders',
             referencedColumnNames: ['id'],
             columnNames: ['orderId'],
-            onDelete: 'CASCADE',
+            onDelete: 'SET NULL',
             onUpdate: 'CASCADE',
           },
           {
-            name: 'productId',
+            name: 'OrdersProductsProduct',
             referencedTableName: 'products',
             referencedColumnNames: ['id'],
             columnNames: ['productId'],
-            onDelete: 'CASCADE',
+            onDelete: 'SET NULL',
             onUpdate: 'CASCADE',
           },
         ],

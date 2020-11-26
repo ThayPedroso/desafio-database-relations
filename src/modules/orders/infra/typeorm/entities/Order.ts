@@ -20,7 +20,7 @@ class Order {
   @JoinColumn({ name: 'customerId' })
   customer: Customer;
 
-  @OneToMany(() => OrdersProducts, order => order.order_id)
+  @OneToMany(() => OrdersProducts, order => order.order, { cascade: true })
   order_products: OrdersProducts[];
 
   @CreateDateColumn()
