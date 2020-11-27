@@ -4,8 +4,8 @@ import AppError from '@shared/errors/AppError';
 
 import IProductsRepository from '@modules/products/repositories/IProductsRepository';
 import ICustomersRepository from '@modules/customers/repositories/ICustomersRepository';
-import Order from '../infra/typeorm/entities/Order';
 import IOrdersRepository from '../repositories/IOrdersRepository';
+import Order from '../infra/typeorm/entities/Order';
 
 interface IProduct {
   id: string;
@@ -13,23 +13,23 @@ interface IProduct {
 }
 
 interface IRequest {
-  customerId: string;
+  customer_id: string;
   products: IProduct[];
 }
 
 @injectable()
 class CreateOrderService {
   constructor(
-    @inject('IOrdersRepository')
+    @inject('OrdersRepository')
     private ordersRepository: IOrdersRepository,
-    @inject('IProductsRepository')
+    @inject('ProductsRepository')
     private productsRepository: IProductsRepository,
-    @inject('ICustomersRepository')
+    @inject('CustomersRepository')
     private customersRepository: ICustomersRepository,
   ) {}
 
-  public async execute({ customerId, products }: IRequest): Promise<Order> {
-    const customerExists = await this.customersRepository.findById(customerId);
+  public async execute({ customer_id, products }: IRequest): Promise<Order> {
+    const customerExists = await this.customersRepository.findById(customer_id);
 
     if (!customerExists) {
       throw new AppError('Unable to find a customer with given id');
@@ -68,7 +68,7 @@ class CreateOrderService {
     }
 
     const serializedProducts = products.map(product => ({
-      productId: product.id,
+      product_id: product.id,
       quantity: product.quantity,
       price: existentProducts.filter(p => p.id === product.id)[0].price,
     }));
